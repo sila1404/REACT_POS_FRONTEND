@@ -1,0 +1,30 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Build and test
+        run: |
+          # Add your build and test commands here
+          echo "Building and testing..."
+
+      - name: Set up .env file
+        run: |
+          touch .env
+          echo "${{ secrets.ENV_FILE }}" > .env
+          chmod 600 .env
+
+      - name: Build and run Docker Compose
+        run: |
+          # Build and run Docker Compose
+          docker compose up --build -d
